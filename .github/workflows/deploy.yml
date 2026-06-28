@@ -36,6 +36,6 @@ jobs:
         set ssl:verify-certificate no
         set ftp:passive-mode true
         open -u $FTP_USERNAME,"$FTP_PASSWORD" $FTP_SERVER
-        mirror -R --verbose ./dist/ /public_html/madbod/
+        mirror -R --verbose ./dist/ /madbod/
         quit
         EOF
