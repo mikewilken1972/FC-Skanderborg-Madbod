@@ -1,5 +1,5 @@
 {
-  "name": "FC Skanderborg",
+  "name": "FC Skanderborg Madbod 2026",
   "description": "App til at administrere frivillige vagter og opgaver i FC Skanderborgs madbod.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

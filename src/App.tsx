@@ -15,7 +15,7 @@ export default function App() {
                 FCS
               </div>
               <div>
-                <h1 className="text-xl font-bold tracking-tight uppercase">FC Skanderborg</h1>
+                <h1 className="text-xl font-bold tracking-tight uppercase">FC Skanderborg Madbod 2026</h1>
                 <p className="text-blue-200 text-xs font-medium">Vagtplaner</p>
               </div>
             </Link>

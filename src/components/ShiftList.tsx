@@ -236,12 +236,52 @@ export function ShiftList({ shift, isAdmin, days = [], onPrint }: ShiftListProps
         ) : (
           <>
             <div>
-              <h3 className="text-lg font-bold text-slate-800">{shift.name}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-800">{shift.name}</h3>
+                {tasks.length > 0 && (() => {
+                  const isCompletelyFull = tasks.every(task => {
+                    const assigneesList = task.assignees || (task.assignedTo ? [task.assignedTo] : []);
+                    return task.maxHelpers != null && assigneesList.length >= task.maxHelpers;
+                  });
+                  
+                  const hasUnlimitedTasks = tasks.some(task => task.maxHelpers == null);
+                  
+                  let availableSpots = 0;
+                  if (!hasUnlimitedTasks) {
+                    tasks.forEach(task => {
+                      const assigneesList = task.assignees || (task.assignedTo ? [task.assignedTo] : []);
+                      if (task.maxHelpers != null && assigneesList.length < task.maxHelpers) {
+                        availableSpots += (task.maxHelpers - assigneesList.length);
+                      }
+                    });
+                  }
+
+                  if (isCompletelyFull) {
+                    return (
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-md text-xs font-bold border border-red-200">
+                        Udfyldt
+                      </span>
+                    );
+                  } else if (hasUnlimitedTasks) {
+                    return (
+                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-md text-xs font-bold border border-green-200">
+                        Ledig
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-md text-xs font-bold border border-green-200">
+                        Ledig ({availableSpots} {availableSpots === 1 ? 'plads' : 'pladser'})
+                      </span>
+                    );
+                  }
+                })()}
+              </div>
               <div className="flex items-center gap-2 text-slate-500 text-sm mt-1 font-medium">
                 <Clock className="w-4 h-4" />
                 {shift.startTime} - {shift.endTime}
                 {shift.disableSelfSignup && (
-                  <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-md text-xs font-bold">
+                  <span className="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-md text-xs font-bold">
                     Selv-tilmelding deaktiveret
                   </span>
                 )}
